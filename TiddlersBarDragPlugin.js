@@ -58,6 +58,7 @@ config.macros.tiddlersBar = {
 					var d = createTiddlyElement(place,"span",null,"tab tabUnselected");
 					var btn = createTiddlyButton(d,title,config.macros.tiddlersBar.tooltip + title,config.macros.tiddlersBar.onSelectTab);
 					btn.setAttribute("tiddler", title);
+					btn.ondragover=config.macros.tiddlersBar.ondragover;
 					if (previous=="active" && config.macros.tiddlersBar.nextKey) btn.setAttribute("accessKey",config.macros.tiddlersBar.previousKey);
 					previous=btn;
 				}
@@ -109,6 +110,13 @@ config.macros.tiddlersBar = {
 		if (t) story.displayTiddler(null,t);
 		return false;
 	},
+	ondragover:function (ev)
+		{
+			ev.preventDefault();
+		var t = this.getAttribute("tiddler");
+		if (t) story.displayTiddler(null,t);
+		return false;
+		},
 	onTabClose : function(e){
 		var t = this.getAttribute("tiddler");
 		if (t) {
