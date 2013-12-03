@@ -1,10 +1,11 @@
 /***
-|''Name:''|TiddlersBarPlugin|
+|''Name:''|TiddlersBarWithDragPlugin|
 |''Description:''|A bar to switch between tiddlers through tabs (like browser tabs bar).|
-|''Version:''|1.2.5|
-|''Date:''|Jan 18,2008|
+|''Version:''|1.0|
+|''Date:''|27-11-2013|
 |''Source:''|http://visualtw.ouvaton.org/VisualTW.html|
 |''Author:''|Pascal Collin|
+|''Modifier:''|BJ|
 |''License:''|[[BSD open source license|License]]|
 |''~CoreVersion:''|2.1.0|
 |''Browser:''|Firefox 2.0; InternetExplorer 6.0, others|
