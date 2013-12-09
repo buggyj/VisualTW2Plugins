@@ -3,7 +3,7 @@
 |''Description:''|Lite and extensible Wysiwyg editor for TiddlyWiki.|
 |''Version:''|1.3.3|
 |''Date:''|Dec 21,2007|
-|''Source:''|http://visualtw.ouvaton.org/VisualTW.html|
+|''Source:''|https://github.com/buggyj/VisualTW2Plugins/|
 |''Author:''|Pascal Collin|
 |''License:''|[[BSD open source license|License]]|
 |''~CoreVersion:''|2.1.0|

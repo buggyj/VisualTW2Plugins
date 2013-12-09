@@ -9,8 +9,7 @@
 |''License:''|[[BSD open source license|License]]|
 |''~CoreVersion:''|2.1.0|
 |''Browser:''|Firefox 2.0; InternetExplorer 6.0, others|
-!Demos
-On [[homepage|http://visualtw.ouvaton.org/VisualTW.html]], open several tiddlers to use the tabs bar.
+
 !Installation
 #import this tiddler from [[homepage|http://visualtw.ouvaton.org/VisualTW.html]] (tagged as systemConfig)
 #save and reload

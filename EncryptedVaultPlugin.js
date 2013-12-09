@@ -3,7 +3,7 @@
 |''Description:''|Adds RC4 encryption and password protection to tiddywiki.|
 |''Version:''|1.0.1|
 |''Date:''|Dec 21,2007|
-|''Source:''|http://visualtw.ouvaton.org/VisualTW.html|
+|''Source:''|https://github.com/buggyj/VisualTW2Plugins/|
 |''Author:''|Pascal Collin|
 |''License:''|[[BSD open source license|License]]|
 |''~CoreVersion:''|2.2.0|

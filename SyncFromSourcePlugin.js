@@ -3,7 +3,7 @@
 |''Description:''|Synchronizes plugins from their original source (issued from plugin info) instead of imported url. So, plugins can be imported from any existing tiddlywiki and still be synchronized with their original source.|
 |''Version:''|1.0.0|
 |''Date:''|Dec 21,2007|
-|''Source:''|http://visualtw.ouvaton.org/VisualTW.html|
+|''Source:''|https://github.com/buggyj/VisualTW2Plugins/|
 |''Author:''|Pascal Collin|
 |''License:''|[[BSD open source license|License]]|
 |''~CoreVersion:''|2.2.0|

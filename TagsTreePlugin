@@ -3,7 +3,7 @@
 |''Description:''|Displays tags hierachy as a tree of tagged tiddlers.<br>Can be used to create dynamic outline navigation.|
 |''Version:''|2.0.0|
 |''Date:''|Oct 14,2011|
-|''Source:''|http://visualtw.ouvaton.org/VisualTW.html|
+|''Source:''|https://github.com/buggyj/VisualTW2Plugins/|
 |''Author:''|Pascal Collin - 2.0.0 Amendments - Simon Huggins|
 |''License:''|[[BSD open source license|License]]|
 |''~CoreVersion:''|2.1.0|
