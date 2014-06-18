@@ -140,18 +140,23 @@ EditorToolbar.createButton = function(place,name){
 EditorToolbar.onCommand = function(name){
 	var button = EditorToolbar.buttons[name];
 	return function(){
-		var parameter = false;
-		if (button.prompt) {
-			var parameter = this.target.queryCommandValue(name);
-			parameter = prompt(button.prompt,parameter);
-		}
-		if (parameter != null) {
-			this.target.execCommand(name, false, parameter);
-			EditorToolbar.onUpdateButton.call(this);
+		//jeff - have other commands launched  by the menus
+		if (button.handle) { button.handle(this.target);}
+		else {	
+			var parameter = false;
+			if (button.prompt) {
+				var parameter = this.target.queryCommandValue(name);
+				parameter = prompt(button.prompt,parameter);
+			}
+			if (parameter != null) {
+				this.target.execCommand(name, false, parameter);
+				EditorToolbar.onUpdateButton.call(this);
+			}
 		}
 		return false;
 	}
 }
+
 
 EditorToolbar.getCommandState = function(target,name){
 	try {return target.queryCommandState(name)}
@@ -172,6 +177,8 @@ EditorToolbar.onUpdateButton = function(){
 
 EditorToolbar.buttons = {
 	separator : {separator : true},
+	TableSize: {label:"Table", toolTip : "Enter Table"/*handle added*/},
+	subscript: {label:"Sub", toolTip : "Subscript"},
 	bold : {label:"B", toolTip : "Bold"},
 	italic : {label:"I", toolTip : "Italic"},
 	underline : {label:"U", toolTip : "Underline"},
@@ -193,7 +200,7 @@ EditorToolbar.buttons = {
 	insertimage : {label:"\u263C", toolTip : "Insert image", prompt: "Enter image url"}
 }
 
-EditorToolbar.buttonsList = "bold,italic,underline,strikethrough,separator,increasefontsize,decreasefontsize,fontsize,forecolor,fontname,separator,removeformat,separator,insertparagraph,insertunorderedlist,insertorderedlist,separator,justifyleft,justifyright,justifycenter,justifyfull,indent,outdent,separator,heading,separator,inserthorizontalrule,insertimage";
+EditorToolbar.buttonsList = "TableSize,subscript,bold,italic,underline,strikethrough,separator,increasefontsize,decreasefontsize,fontsize,forecolor,fontname,separator,removeformat,separator,insertparagraph,insertunorderedlist,insertorderedlist,separator,justifyleft,justifyright,justifycenter,justifyfull,indent,outdent,separator,heading,separator,inserthorizontalrule,insertimage";
 
 if (config.browser.isGecko) {
 	EditorToolbar.buttons.increasefontsize = {onCreate : EditorToolbar.createButton, label:"A", toolTip : "Increase font size"};
@@ -214,7 +221,7 @@ geckoEditor.plugEvents = function(doc,onchange){
 	doc.addEventListener("click", onchange, true);
 }
 
-geckoEditor.postProcessor = function(text){return text};
+geckoEditor.postProcessor = function(text){return text;};
 
 geckoEditor.preProcessor = function(text){return easyEditor.SimplePreProcessoror(text)}
 
@@ -322,6 +329,34 @@ if (config.annotations) config.annotations.EasyEditDocStyleSheet = "This stylesh
 !Link button add-on
 ***/
 //{{{
+/////////////////////////////////////////////////////////////////////////////////////////
+
+EditorToolbar.buttons.TableSize.handle = function(target){
+	var rc= prompt('Please enter (rows x cols) of the table', '2 x 3');
+	if (!rc || (rc.trim()).length<=0){ return ''; }
+	var arr = rc.toUpperCase().split('X');
+	if(arr.length != 2)   { return ''; }
+
+	if(isNaN(arr[0].trim()))  { return ''; }
+	if(isNaN(arr[0].trim()))  { return ''; }
+
+	var rows = parseInt(arr[0].trim(), 10);
+	var cols = parseInt(arr[1].trim(), 10);
+	var elems='';
+	for(var r=0; r<rows; r++){
+		for(var c=0; c<=cols; c++){
+			if(c===0){elems += '|';}
+			else     {elems += 'leftAlign |';}
+		}
+		elems += '\n';
+	}
+	var previewer = document.createElement('div');
+    wikify(elems, previewer);
+    target.execCommand('inserthtml', false, previewer.innerHTML.replace(/leftAlign/g, ''));
+return '';
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
 EditorToolbar.createLinkButton = function(place,name) {
 	this.elements[name] = createTiddlyButton(place,EditorToolbar.buttons[name].label,EditorToolbar.buttons[name].toolTip,contextualCallback(this,EditorToolbar.onInputLink()),"button");
 }
@@ -413,5 +448,6 @@ IEeditor.initContent = function(doc,content){
 config.shadowTiddlers.EasyEditToolBarStyleSheet += "\n/*{{{*/\n.easyEditorToolBar .createlinkButton .button {color:blue;text-decoration:underline;}\n/*}}}*/";
 
 config.shadowTiddlers.EasyEditDocStyleSheet += "\n/*{{{*/\na {color:#0044BB;font-weight:bold}\n/*}}}*/";
+
 
 //}}}
