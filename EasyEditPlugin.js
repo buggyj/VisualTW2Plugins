@@ -134,7 +134,8 @@ function EditorToolbar(target,parent,window){
 }
 
 EditorToolbar.createButton = function(place,name){
-	this.elements[name] = createTiddlyButton(place,EditorToolbar.buttons[name].label,EditorToolbar.buttons[name].toolTip,contextualCallback(this,EditorToolbar.onCommand(name)),"button");
+	this.elements[name] = createTiddlyButton(place,EditorToolbar.buttons[name].label,EditorToolbar.buttons[name].toolTip,
+	contextualCallback(this,EditorToolbar.onCommand(name)),"button");
 }
 
 EditorToolbar.onCommand = function(name){
@@ -156,8 +157,38 @@ EditorToolbar.onCommand = function(name){
 		return false;
 	}
 }
+function hackbut(e)
+{
+var popup = Popup.create(e.target);
+var self = this;
+function clickHere2(ev)
+{
+	var val =this.getAttribute("val");
+    self.target.execCommand('forecolor', false, val);
+};
+var values=["rgb(0, 110, 0)","rgb(1, 1, 1)"];
 
+	var ul = createTiddlyElement(popup,"ul","","popupMessage");
+	for(t=0; t<values.length; t++) {
 
+		var title = values[t];
+
+		var li = createTiddlyElement(ul,"li",null,"",null,{style:"list-style:none;"});
+		var btn = createTiddlyButton(li,title,"add",clickHere2);
+
+		btn.setAttribute("val",title);
+	}
+	Popup.show();
+
+	e.cancelBubble = true;
+	if(e.stopPropagation) e.stopPropagation();
+	return false;
+
+};
+EditorToolbar.ontbutton =function(place,name){
+	this.elements[name] = createTiddlyButton(place,EditorToolbar.buttons[name].label,EditorToolbar.buttons[name].toolTip,
+	contextualCallback(this,hackbut),"button");
+}
 EditorToolbar.getCommandState = function(target,name){
 	try {return target.queryCommandState(name)}
 	catch(e){return false}
@@ -191,7 +222,7 @@ EditorToolbar.buttons = {
 	justifyfull : {label:"[\u2261]", toolTip : "Justify"},
 	removeformat : {label:"\u00F8", toolTip : "Remove format"},
 	fontsize : {label:"\u00B1", toolTip : "Set font size", prompt: "Enter font size"},
-	forecolor : {label:"C", toolTip : "Set font color", prompt: "Enter font color"},
+	forecolor : {label:"C", toolTip : "Set font color", prompt: "Enter font color",onCreate:EditorToolbar.ontbutton},
 	fontname : {label:"F", toolTip : "Set font name", prompt: "Enter font name"},
 	heading : {label:"H", toolTip : "Set heading level", prompt: "Enter heading level (example : h1, h2, ...)"},
 	indent : {label:"\u2192[", toolTip : "Indent paragraph"},
@@ -264,7 +295,7 @@ IEeditor.initContent = function(doc,content){
 }
 	
 function contextualCallback(obj,func){
-    return function(){return func.call(obj)}
+    return function(e){return func.call(obj,e)}
 }
 	
 Story.prototype.previousGatherSaveEasyEdit = Story.prototype.previousGatherSaveEasyEdit ? Story.prototype.previousGatherSaveEasyEdit : Story.prototype.gatherSaveFields; // to avoid looping if this line is called several times
